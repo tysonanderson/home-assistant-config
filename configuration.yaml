@@ -1,0 +1,117 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 40.711510
+  longitude: -111.817401
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 1280
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Denver
+  # Customization file
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+sensor:
+  - platform: mqtt
+    name: "Coop temp"
+    icon: "mdi:ac_unit"
+    state_topic: "coop/temp"
+    
+  - platform: mqtt
+    name: "Food level"
+    icon: "mdi:cake"
+    state_topic: "coop/food"
+    
+binary_sensor:
+  - platform: mqtt
+    name: "Water level"
+    state_topic: "coop/water"
+mqtt:
+  broker: 192.168.0.58
+  port: 1883
+
+# Chicken Door
+    
+cover:
+  - platform: mqtt
+    name: "Coop Door"
+    command_topic: "coop/door/set"
+    retain: true
+    state_topic: "coop/door"
+    state_open: "open"
+    state_closed: "close"
+
+switch:
+  - platform: mqtt
+    name: "Water heater"
+    retain: true
+    command_topic: "coop/heater"
+    
+light:
+  - platform: mqtt
+    name: "Coop Light"
+    retain: true
+    command_topic: "coop/light"
+
+device_tracker:
+  - platform: tile
+    username: fotoman607@gmail.com
+    password: !secret tile_password
+  - platform: bluetooth_tracker
+
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://192.168.0.58:3218
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

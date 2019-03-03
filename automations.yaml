@@ -1,0 +1,23 @@
+- alias: Open coop door at sunrise
+  id: '24'
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: mqtt.publish
+    data:
+      payload: 'open'
+      topic: 'coop/door/set'
+      retain: true
+
+- alias: Close coop door at sunset
+  id: '25'
+  trigger:
+  - platform: sun
+    event: sunset
+  action:
+  - service: mqtt.publish
+    data:
+      payload: 'close'
+      topic: 'coop/door/set'
+      retain: true

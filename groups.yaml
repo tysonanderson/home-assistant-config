@@ -1,0 +1,11 @@
+  coop_view:
+    name: "Chicken Coop"
+    view: no
+    control: hidden
+    entities:
+      - cover.coop_door
+      - sensor.coop_temp
+      - light.coop_light
+      - switch.water_heater
+      - sensor.food_level
+      - binary_sensor.water_level
